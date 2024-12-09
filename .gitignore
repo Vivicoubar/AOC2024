@@ -1,4 +1,2 @@
-ex*.txt
-input*.txt
 .pre-commit-config.yaml
 pre-commit-scripts/
