@@ -10,8 +10,8 @@ def read_file(filename) -> str:
         return file.read().strip()
 
 
-def part1and2() -> tuple[int, int]:
-    data: str = read_file(filename=INPUT_FILE)
+def part1and2(file) -> tuple[int, int]:
+    data: str = read_file(filename=file)
     entry, queries = data.split("\n\n")
     before_x: dict[int, set[int]] = defaultdict(set)
     after_x: dict[int, set[int]] = defaultdict(set)
@@ -69,15 +69,37 @@ def benchmark_p1and2(n_iter: int) -> None:
     secs: float = 0
     for _ in range(n_iter):
         start: float = perf_counter()
-        part1and2()
+        part1and2(INPUT_FILE)
         end: float = perf_counter()
         secs += end - start
     print(f"Part 1 and 2: {(secs) / n_iter:.7f} s")
 
 
-res_1, res_2 = part1and2()
-print("----- [Results] -----")
-print("Res 1: " + str(res_1))
-print("Res 2: " + str(res_2))
-print("--- [Benchmarks] ---")
-benchmark_p1and2(100)
+def write_output(output_file):
+    res_ex1, res_ex2 = part1and2(EX_FILE)
+    res_1, res_2 = part1and2(INPUT_FILE)
+    # Write the output in the format required (4 lines)
+    with open(output_file, "w") as f:
+        # Example Input results
+        f.write(f"{res_ex1}\n")
+        f.write(f"{res_ex2}\n")
+        # Real Input results
+        f.write(f"{res_1}\n")
+        f.write(f"{res_2}\n")
+
+
+def show_results():
+    res_ex1, res_ex2 = part1and2(EX_FILE)
+    res_1, res_2 = part1and2(INPUT_FILE)
+    print("----- [Results] -----")
+    print("Res EX 1: " + str(res_ex1))
+    print("Res EX 2: " + str(res_ex2))
+    print("Res 1: " + str(res_1))
+    print("Res 2: " + str(res_2))
+    print("--- [Benchmarks] ---")
+    benchmark_p1and2(100)
+
+
+if __name__ == "__main__":
+    # show_results()
+    write_output("./AOC5/output_code.txt")

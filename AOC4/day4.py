@@ -108,8 +108,8 @@ def check_cross_pattern(x, y, max_x, max_y, grid, pattern) -> bool:
     return word == "MASMAS"
 
 
-def part1() -> int:
-    data: str = read_file(filename=INPUT_FILE)
+def part1(file) -> int:
+    data: str = read_file(filename=file)
     grid: list[str] = data.split("\n")
     max_row: int = len(grid)
     max_col: int = len(grid[0])
@@ -122,8 +122,8 @@ def part1() -> int:
     return p1
 
 
-def part2() -> int:
-    data: str = read_file(filename=INPUT_FILE)
+def part2(file) -> int:
+    data: str = read_file(filename=file)
     grid: list[str] = data.split("\n")
     max_row: int = len(grid)
     max_col: int = len(grid[0])
@@ -141,7 +141,7 @@ def benchmark_p1(n_iter: int) -> None:
     secs: float = 0
     for _ in range(n_iter):
         start: float = perf_counter()
-        part1()
+        part1(INPUT_FILE)
         end: float = perf_counter()
         secs += end - start
     print(f"Part 1: {(secs) / n_iter:.7f} s")
@@ -151,18 +151,42 @@ def benchmark_p2(n_iter: int) -> None:
     secs: float = 0
     for _ in range(n_iter):
         start: float = perf_counter()
-        part1()
+        part1(INPUT_FILE)
         end: float = perf_counter()
         secs += end - start
     print(f"Part 2: {(secs) / n_iter:.7f} s")
 
 
-res1: int = part1()
-res2: int = part2()
-n_iter = 100
-print("----- [Results] -----")
-print("Res 1: " + str(res1))
-print("Res 2: " + str(res2))
-print("--- [Benchmarks] ---")
-benchmark_p1(n_iter)
-benchmark_p2(n_iter)
+def write_output(output_file):
+    res_ex1 = part1(EX_FILE)
+    res_ex2 = part2(EX_FILE)
+    res_1 = part1(INPUT_FILE)
+    res_2 = part2(INPUT_FILE)
+    # Write the output in the format required (4 lines)
+    with open(output_file, "w") as f:
+        # Example Input results
+        f.write(f"{res_ex1}\n")
+        f.write(f"{res_ex2}\n")
+        # Real Input results
+        f.write(f"{res_1}\n")
+        f.write(f"{res_2}\n")
+
+
+def show_results():
+    res_ex1 = part1(EX_FILE)
+    res_ex2 = part2(EX_FILE)
+    res_1 = part1(INPUT_FILE)
+    res_2 = part2(INPUT_FILE)
+    print("----- [Results] -----")
+    print("Res EX 1: " + str(res_ex1))
+    print("Res EX 2: " + str(res_ex2))
+    print("Res 1: " + str(res_1))
+    print("Res 2: " + str(res_2))
+    print("--- [Benchmarks] ---")
+    benchmark_p1(100)
+    benchmark_p2(100)
+
+
+if __name__ == "__main__":
+    # show_results()
+    write_output("./AOC4/output_code.txt")

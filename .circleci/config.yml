@@ -1,0 +1,32 @@
+version: 2.1
+
+jobs:
+  test-aoc:
+    docker:
+      - image: python:3.10 # Use Python 3.10
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            python -m pip install --upgrade pip
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - run:
+          name: Run tests for all days
+          command: |
+            for day_folder in AOC*/; do
+              # Extract day number from folder name (e.g., AOC1 -> 1)
+              day_number=$(basename "$day_folder" | sed 's/AOC//')
+
+              # Run solution script and generate output.txt
+              python "$day_folder/day${day_number}.py"
+
+              # Compare the output.txt file for each day with the expected output
+              diff "$day_folder/output.txt" "$day_folder/output_code.txt" || (echo "Test failed for Day $day_number" && exit 1)
+            done
+
+workflows:
+  version: 2
+  test-workflow:
+    jobs:
+      - test-aoc

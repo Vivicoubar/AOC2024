@@ -29,8 +29,8 @@ def is_safe(numbers: list[int]) -> tuple[bool, int]:
     return True, 0
 
 
-def part1() -> int:
-    data: list[str] = [str.strip() for str in read_file(filename=INPUT_FILE)]
+def part1(file) -> int:
+    data: list[str] = [str.strip() for str in read_file(filename=file)]
     safe_lines = 0
     for line in data:
         numbers = [int(num) for num in line.split()]
@@ -40,8 +40,8 @@ def part1() -> int:
     return safe_lines
 
 
-def part2() -> int:
-    data: list[str] = [str.strip() for str in read_file(INPUT_FILE)]
+def part2(file) -> int:
+    data: list[str] = [str.strip() for str in read_file(file)]
     safe_lines = 0
     for line in data:
         numbers = [int(num) for num in line.split()]
@@ -63,7 +63,7 @@ def benchmark_p1(n_iter: int) -> None:
     secs: float = 0
     for _ in range(n_iter):
         start: float = perf_counter()
-        part1()
+        part1(file=INPUT_FILE)
         end: float = perf_counter()
         secs += end - start
     print(f"Part 1: {(secs) / n_iter:.7f} s")
@@ -73,17 +73,42 @@ def benchmark_p2(n_iter: int) -> None:
     secs: float = 0
     for _ in range(n_iter):
         start: float = perf_counter()
-        part2()
+        part2(file=INPUT_FILE)
         end: float = perf_counter()
         secs += end - start
     print(f"Part 2: {(secs) / n_iter:.7f} s")
 
 
-res_1 = part1()
-res_2 = part2()
-print("----- [Results] -----")
-print("Res 1: " + str(res_1))
-print("Res 2: " + str(res_2))
-print("--- [Benchmarks] ---")
-benchmark_p1(100)
-benchmark_p2(100)
+def write_output(output_file):
+    res_ex1 = part1(EX_FILE)
+    res_ex2 = part2(EX_FILE)
+    res_1 = part1(INPUT_FILE)
+    res_2 = part2(INPUT_FILE)
+    # Write the output in the format required (4 lines)
+    with open(output_file, "w") as f:
+        # Example Input results
+        f.write(f"{res_ex1}\n")
+        f.write(f"{res_ex2}\n")
+        # Real Input results
+        f.write(f"{res_1}\n")
+        f.write(f"{res_2}\n")
+
+
+def show_results():
+    res_ex1 = part1(EX_FILE)
+    res_ex2 = part2(EX_FILE)
+    res_1 = part1(INPUT_FILE)
+    res_2 = part2(INPUT_FILE)
+    print("----- [Results] -----")
+    print("Res EX 1: " + str(res_ex1))
+    print("Res EX 2: " + str(res_ex2))
+    print("Res 1: " + str(res_1))
+    print("Res 2: " + str(res_2))
+    print("--- [Benchmarks] ---")
+    benchmark_p1(100)
+    benchmark_p2(100)
+
+
+if __name__ == "__main__":
+    # show_results()
+    write_output("./AOC2/output_code.txt")
