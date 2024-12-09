@@ -17,7 +17,7 @@ jobs:
             for day_folder in AOC*/; do
               # Extract day number from folder name (e.g., AOC1 -> 1)
               day_number=$(basename "$day_folder" | sed 's/AOC//')
-
+              echo "Day $day_number Tests..."
               # Run solution script and generate output.txt
               python "$day_folder/day${day_number}.py"
 
