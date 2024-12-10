@@ -79,7 +79,7 @@ def write_output(output_file):
     res_ex2 = part2(EX_FILE)
     res_1 = part1(INPUT_FILE)
     res_2 = part2(INPUT_FILE)
-    # Write the output in the format required (4 lines)
+    # Write the output in the format required (4 lines).
     with open(output_file, "w") as f:
         # Example Input results
         f.write(f"{res_ex1}\n")
