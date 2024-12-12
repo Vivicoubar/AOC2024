@@ -20,6 +20,8 @@ def part1and2(file: str, do_p2: bool = False) -> int:
     p1: int = 0
     p2: int = 0
     positions_set = set()
+    # We explore the grid to find the different letters and calculate the area
+    # and perimeter of each letter
     for row in range(max_rows):
         for col in range(max_cols):
             if (row, col) in positions_set:
@@ -28,6 +30,7 @@ def part1and2(file: str, do_p2: bool = False) -> int:
             area = 0
             perim = 0
             perim_set = defaultdict(set)
+            # BFS to find the area and perimeter of the current letter
             while queue:
                 cur_row, cur_col = queue.popleft()
                 if (cur_row, cur_col) in positions_set:
@@ -45,7 +48,11 @@ def part1and2(file: str, do_p2: bool = False) -> int:
                         # Same letter
                         queue.append((new_row, new_col))
                     else:
+                        # Different letter, we are on a side, so we need to
+                        # count the perimeter
                         perim += 1
+                        # Add the perimeter to the set of perimeters for that
+                        # direction, used for part 2
                         perim_set[movement].add((cur_row, cur_col))
             p1 += area * perim
 
@@ -53,16 +60,23 @@ def part1and2(file: str, do_p2: bool = False) -> int:
                 continue
             cur_sides: int = 0
             for _, values in perim_set.items():
-                seen_perim = set()
+                # For each direction, we need to check if the elements of the
+                # perimeter are connected. If it is, we need to count it only
+                # once: that's a side
+                seen_perim_for_dir = set()
                 for perim_row, perim_col in values:
-                    if (perim_row, perim_col) not in seen_perim:
+                    if (perim_row, perim_col) not in seen_perim_for_dir:
                         cur_sides += 1
                         queue = deque([(perim_row, perim_col)])
+                        # BFS to find the connected elements of the perimeter,
+                        # so we can count it only once
                         while queue:
                             new_perim_row, new_perim_col = queue.popleft()
-                            if (new_perim_row, new_perim_col) in seen_perim:
+                            if (new_perim_row,
+                                    new_perim_col) in seen_perim_for_dir:
                                 continue
-                            seen_perim.add((new_perim_row, new_perim_col))
+                            seen_perim_for_dir.add(
+                                (new_perim_row, new_perim_col))
                             for movement in MOVEMENTS:
                                 new_row = new_perim_row + movement[0]
                                 new_col = new_perim_col + movement[1]
