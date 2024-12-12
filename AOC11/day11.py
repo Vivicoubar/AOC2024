@@ -32,11 +32,13 @@ def blink_for_stone(stone, time) -> int:
 
 
 def part1(file: str) -> int:
+    DISTINCT_STONES.clear()
     stones: list[int] = [int(x) for x in read_file(file).split()]
     return sum(blink_for_stone(stone, 25) for stone in stones)
 
 
 def part2(file: str) -> int:
+    DISTINCT_STONES.clear()
     stones: list[int] = [int(x) for x in read_file(file).split()]
     return sum(blink_for_stone(stone, 75) for stone in stones)
 
