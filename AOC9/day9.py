@@ -1,5 +1,6 @@
 from time import perf_counter
 from typing import NamedTuple
+from sys import stdout
 
 EX_FILE: str = "./AOC9/ex1.txt"
 INPUT_FILE: str = "./AOC9/input1.txt"
@@ -88,6 +89,7 @@ def benchmark_p1(n_iter: int) -> None:
         end: float = perf_counter()
         secs += end - start
         print(".", end=" ")
+        stdout.flush()
     print(f"Part 1 :{(secs) / n_iter:.7f} s")
 
 
@@ -100,6 +102,7 @@ def benchmark_p2(n_iter: int) -> None:
         end: float = perf_counter()
         secs += end - start
         print(".", end=" ")
+        stdout.flush()
     print(f"Part 2: {(secs) / n_iter:.7f} s")
 
 
@@ -134,5 +137,5 @@ def show_results():
 
 
 if __name__ == "__main__":
-    # show_results()
+    show_results()
     write_output("./AOC9/output_code.txt")

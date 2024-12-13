@@ -100,5 +100,5 @@ def show_results():
 
 
 if __name__ == "__main__":
-    # show_results()
+    show_results()
     write_output("./AOC11/output_code.txt")

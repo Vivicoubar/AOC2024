@@ -1,5 +1,6 @@
 from collections import defaultdict
 from time import perf_counter
+from sys import stdout
 
 EX_FILE: str = "./AOC5/ex1.txt"
 INPUT_FILE: str = "./AOC5/input1.txt"
@@ -67,11 +68,14 @@ def sort_line(
 
 def benchmark_p1and2(n_iter: int) -> None:
     secs: float = 0
+    print("Benchmark 1 and 2 -", n_iter, "iterations: ", end=" ")
     for _ in range(n_iter):
         start: float = perf_counter()
         part1and2(INPUT_FILE)
         end: float = perf_counter()
         secs += end - start
+        print(".", end=" ")
+        stdout.flush()
     print(f"Part 1 and 2: {(secs) / n_iter:.7f} s")
 
 
@@ -101,5 +105,5 @@ def show_results():
 
 
 if __name__ == "__main__":
-    # show_results()
+    show_results()
     write_output("./AOC5/output_code.txt")
