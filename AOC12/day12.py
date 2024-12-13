@@ -144,4 +144,4 @@ def show_results():
 
 if __name__ == "__main__":
     show_results()
-    write_output("./AOC12/output.txt")
+    write_output("./AOC12/output_code.txt")
