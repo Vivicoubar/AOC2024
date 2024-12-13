@@ -121,7 +121,7 @@ def show_results():
     print("Res 1: " + str(res_1))
     print("Res 2: " + str(res_2))
     print("--- [Benchmarks] ---")
-    benchmark_p1and2(100)
+    benchmark_p1and2(20)
 
 
 if __name__ == "__main__":
